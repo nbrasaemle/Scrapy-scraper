@@ -30,7 +30,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));
 
 // Connect to the Mongo DB
-mongoose.connect("mongodb://localhost/buzzdb");
+// mongoose.connect("mongodb://localhost/buzzdb");
 // If deployed, use the deployed database. Otherwise use the local buzzdb database
 var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/buzzdb";
 
