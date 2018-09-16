@@ -2,7 +2,7 @@ var express = require("express");
 var bodyParser = require("body-parser");
 var logger = require("morgan");
 var mongoose = require("mongoose");
-
+var exphbs = require("express-handlebars");
 // Our scraping tools
 // Axios is a promised-based http library, similar to jQuery's Ajax method
 // It works on the client and on the server
@@ -61,7 +61,9 @@ app.get("/scrape", function(req, res) {
       result.link = $(this)
         .children("a")
         .attr("href");
-
+      result.summary = $(this)
+        .children("p")
+        .text();
       // Create a new Article using the `result` object built from scraping
       db.Article.create(result)
         .then(function(dbArticle) {
@@ -129,6 +131,11 @@ app.post("/articles/:id", function(req, res) {
     });
 });
 
+//---------------------------------------------------------------------------------------------------------------
+// index route loads view.html
+app.get("/", function (req, res) {
+    res.sendFile(path.join(__dirname, "./views/index.handlebars"));
+});
 // Start the server
 app.listen(PORT, function() {
   console.log("App running on port " + PORT + "!");
